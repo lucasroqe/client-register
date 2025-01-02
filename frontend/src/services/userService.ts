@@ -1,12 +1,17 @@
 import { api } from './api'
 
 export const userService = {
-    async criarTabela() {
+
+    async listarUsuarios(){
         return await api.get('/')
     },
+
+    async criarTabela() {
+        return await api.post('/creata/table')
+    },
     
-    async criarUsuario(nome: string, email: string, senha: string) {
-        return await api.post('/create', { nome, email, senha })
+    async criarUsuario(name: string, email: string, password: string) {
+        return await api.post('/create/user', { name, email, password })
     },
     
     async deletarUsuario(id: number) {

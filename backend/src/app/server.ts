@@ -7,33 +7,36 @@ const porta = 3333;
 
 const database = new DatabasePostgres();
 
-server.get("/", async (request, reply) =>{
-  const data = await database.getUsers()
+server.get("/", async (request, reply) => {
+  const data = await database.getUsers();
 
-  reply.send(data)
-})
+  reply.send(data);
+});
 
-
-server.post("/table", async (request, reply) => {
+server.post("/create/table", async (request, reply) => {
   try {
     await database.criar();
 
-    reply.status(202).send(console.log("Tabelas criadas"));
+    reply.status(201).send({
+      message: "Tabelas criadas com sucesso",
+    });
   } catch (error) {
-    console.log("Erro ao criar tabela");
+    reply.status(500).send({ error: "Erro ao criar tabela" });
   }
 });
 
-server.post<{ Body: User }>("/create", async (request, reply) => {
+server.post<{ Body: User }>("/create/user", async (request, reply) => {
   const { name, email, password } = request.body;
 
-  await database.inserir({ name, email, password });
+  try {
+    await database.inserir({ name, email, password });
 
-  reply
-    .status(202)
-    .send(
-      console.log(`Você criou um novo usuário ${name}, ${email}, ${password}`)
-    );
+    reply.status(202).send({
+      message: `Você criou um novo usuário ${name}, ${email}, ${password}`,
+    });
+  } catch (error) {
+    reply.status(500).send({ error: "Erro ao criar usuário" });
+  }
 });
 
 server.delete<{ Params: { id: number } }>(
@@ -45,9 +48,9 @@ server.delete<{ Params: { id: number } }>(
       await database.deletar(idUser);
       reply
         .status(202)
-        .send(console.log(`Usuário ${idUser} deletado com sucesso`));
+        .send({ message: `Usuário ${idUser} deletado com sucesso` });
     } catch (error) {
-      console.log(`Erro ao deletar usuário ${idUser}`);
+      reply.status(500).send({ error: `Erro ao deletar usuário ${idUser}` });
     }
   }
 );

@@ -1,14 +1,17 @@
+POST http://localhost:3333/create/table
+
+###
 GET http://localhost:3333
 
 ###
-POST http://localhost:3333/create
+POST http://localhost:3333/create/user
 Content-Type: application/json
 
 {
-    "name": "a",
-    "email": "as@123",
+    "name": "Lucas",
+    "email": "Lucas@gmail.com",
     "password": "123"
 }
 
 ###
-DELETE http://localhost:3333/delete/6
+DELETE http://localhost:3333/delete/24
