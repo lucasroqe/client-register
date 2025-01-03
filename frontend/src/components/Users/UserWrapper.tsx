@@ -1,23 +1,28 @@
 import { FaTrash } from "react-icons/fa";
 import { User } from "../../types/User";
+import styles from "./UserWrapper.module.css";
 
 interface UserWrapperProps {
   user: User[];
-  onDelete: (id:number) => void
+  onDelete: (id: number) => void;
 }
 
 export default function UserWrapper({ user, onDelete }: UserWrapperProps) {
-
   return (
-    <div>
-      <div>
-        {user.map((user, id) => (
-          <div key={id}>
-            {user.name} - {user.email}
-            <FaTrash onClick={() => onDelete(user.id)} />
+    <div className={styles.wrapper}>
+      {user.map((user) => (
+        <div key={user.id} className={styles.content}>
+          <div className={styles.info}>
+            <div>
+              <strong>Name:</strong> {user.name}
+            </div>
+            <div>
+              <strong>E-mail:</strong> {user.email}
+            </div>
           </div>
-        ))}
-      </div>
+          <FaTrash onClick={() => onDelete(user.id)} className={styles.icon} />
+        </div>
+      ))}
     </div>
   );
 }

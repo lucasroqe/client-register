@@ -1,3 +1,5 @@
+# Arquivo para testar as rotas (REST Client)
+
 POST http://localhost:3333/create/table
 
 ###
@@ -9,9 +11,9 @@ Content-Type: application/json
 
 {
     "name": "Lucas",
-    "email": "Lucas@gmail.com",
+    "email": "Lucas@teste.com",
     "password": "123"
 }
 
 ###
-DELETE http://localhost:3333/delete/24
+DELETE http://localhost:3333/delete/1

@@ -1,21 +1,23 @@
 import Fastify from "fastify";
 import { DatabasePostgres } from "../database/db";
 import { User } from "../types/user";
+import bcrypt from "bcrypt";
 
 const server = Fastify();
-const porta = 3333;
+const port = 3333;
+const saltRounds = 10;
 
 const database = new DatabasePostgres();
 
 server.get("/", async (request, reply) => {
-  const data = await database.getUsers();
+  const data = await database.getUser();
 
   reply.send(data);
 });
 
 server.post("/create/table", async (request, reply) => {
   try {
-    await database.criar();
+    await database.createTable();
 
     reply.status(201).send({
       message: "Tabelas criadas com sucesso",
@@ -28,11 +30,13 @@ server.post("/create/table", async (request, reply) => {
 server.post<{ Body: User }>("/create/user", async (request, reply) => {
   const { name, email, password } = request.body;
 
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
   try {
-    await database.inserir({ name, email, password });
+    await database.insertUser({ name, email, password: hashedPassword });
 
     reply.status(202).send({
-      message: `Você criou um novo usuário ${name}, ${email}, ${password}`,
+      message: `Você criou um novo usuário ${name}, ${email}`,
     });
   } catch (error) {
     reply.status(500).send({ error: "Erro ao criar usuário" });
@@ -45,7 +49,7 @@ server.delete<{ Params: { id: number } }>(
     const idUser = request.params.id;
 
     try {
-      await database.deletar(idUser);
+      await database.deleteUser(idUser);
       reply
         .status(202)
         .send({ message: `Usuário ${idUser} deletado com sucesso` });
@@ -55,6 +59,6 @@ server.delete<{ Params: { id: number } }>(
   }
 );
 
-server.listen({ port: porta }, () => {
-  console.log(`Servidor rodando na porta ${porta}`);
+server.listen({ port: port }, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });

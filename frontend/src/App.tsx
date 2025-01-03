@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./App.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import { userService } from "./services/userService";
@@ -103,9 +103,7 @@ function App() {
               />
             </div>
             <div className={styles.button}>
-              <button type="submit">
-                CREATE
-              </button>
+              <button type="submit">CREATE</button>
             </div>
           </form>
         </div>

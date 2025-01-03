@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #383742;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 25rem;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.icon {
+  cursor: pointer;
+  color: #ff6b6b;
+  font-size: 1.2rem;
+  transition: transform 0.1s, color 0.1s;
+}
+
+.icon:hover {
+  color: #ff4c4c;
+  transform: scale(1.2);
+}
