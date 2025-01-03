@@ -4,7 +4,7 @@ const { Pool } = pg;
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
-  database: "fullstack-db",
+  database: "register-db",
   password: "123",
   port: 5432,
 });
