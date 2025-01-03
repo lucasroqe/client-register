@@ -20,7 +20,7 @@ function App() {
       const response = await userService.listarUsuarios();
       setUser(response.data);
     } catch (error) {
-      toast.error("Erro ao carregar usuários");
+      console.log("Error loading user");
     }
   }
 
@@ -29,9 +29,9 @@ function App() {
       await userService.deletarUsuario(id);
       const newArray = user.filter((user) => user.id !== id);
       setUser(newArray);
-      toast.success("Usuário deletado com sucesso");
+      toast.success("User successfully deleted");
     } catch (error) {
-      toast.error("Erro ao deletar usuário");
+      toast.error("Error when deleting user");
     }
   }
 
@@ -43,9 +43,11 @@ function App() {
         form.password
       );
       setUser((oldUsers) => [...oldUsers, response.data]);
+      toast.success("User created successfully")
       setForm({ name: "", email: "", password: "" });
     } catch (error) {
-      toast.error("Erro ao criar usuário");
+      console.log("Erro ao criar usuário");
+      toast.error("Error creating user");
     }
   }
 
